@@ -26,7 +26,7 @@ public class FacadeCalculationService : IFacadeCalculationService
         
         return new FacadeCoverageCalculationResult(desks);
     }
-
+     
     /// <inheritdoc />
     public CutDesksResult CutDesks(Desk[] desks)
     {
