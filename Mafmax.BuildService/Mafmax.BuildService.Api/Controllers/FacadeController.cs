@@ -1,4 +1,4 @@
-using Mafmax.BuildService.BusinessLayer.Models;
+п»їusing Mafmax.BuildService.BusinessLayer.Models;
 using Mafmax.BuildService.BusinessLayer.Services.Facade;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,17 +8,17 @@ namespace Mafmax.BuildService.Api.Controllers;
 public class FacadeController(IFacadeCalculationService facadeCalculationService) : ControllerBase
 {
     /// <summary>
-    /// Вычисляет количество и длины фасадных панелей для полного покрытия фасада здания.
+    /// Р’С‹С‡РёСЃР»СЏРµС‚ РєРѕР»РёС‡РµСЃС‚РІРѕ Рё РґР»РёРЅС‹ С„Р°СЃР°РґРЅС‹С… РїР°РЅРµР»РµР№ РґР»СЏ РїРѕР»РЅРѕРіРѕ РїРѕРєСЂС‹С‚РёСЏ С„Р°СЃР°РґР° Р·РґР°РЅРёСЏ.
     /// </summary>
-    /// <param name="facadeProfile">Описание фасада зданиЯ.</param>
+    /// <param name="facadeProfile">РћРїРёСЃР°РЅРёРµ С„Р°СЃР°РґР° Р·РґР°РЅРёРЇ.</param>
     [HttpPost("calculateCoverage")]
     public ValueTask<FacadeCoverageCalculationResult> CalculateFacadeCoverage([FromBody] FacadeProfile facadeProfile) =>
         ValueTask.FromResult(facadeCalculationService.CalculateFacadeCoverage(facadeProfile));
 
     /// <summary>
-    /// Раскраивает панели, минимизируя количество обрезков.
+    /// Р Р°СЃРєСЂР°РёРІР°РµС‚ РїР°РЅРµР»Рё, РјРёРЅРёРјРёР·РёСЂСѓСЏ РєРѕР»РёС‡РµСЃС‚РІРѕ РѕР±СЂРµР·РєРѕРІ.
     /// </summary>
-    /// <param name="request">Запрос, содержащий описание досок, которые нужно получить в результате раскройки.</param>
+    /// <param name="request">Р—Р°РїСЂРѕСЃ, СЃРѕРґРµСЂР¶Р°С‰РёР№ РѕРїРёСЃР°РЅРёРµ РґРѕСЃРѕРє, РєРѕС‚РѕСЂС‹Рµ РЅСѓР¶РЅРѕ РїРѕР»СѓС‡РёС‚СЊ РІ СЂРµР·СѓР»СЊС‚Р°С‚Рµ СЂР°СЃРєСЂРѕР№РєРё.</param>
     [HttpPost("cutDesks")]
     public ValueTask<CutDesksResult> CutDesks([FromBody] CutDesksRequest request) => 
         ValueTask.FromResult(facadeCalculationService.CutDesks(request.Desks));
