@@ -23,7 +23,7 @@ public class FacadeCalculationService : IFacadeCalculationService
             var deskLength = GetDeskLength(ref corners, ref lastBottomIndex, ref lastTopIndex, leftSideX, rightSideX);
             desks[panelIndex] = new Desk(deskLength);
         }
-
+        
         return new FacadeCoverageCalculationResult(desks);
     }
 
