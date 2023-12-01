@@ -7,7 +7,7 @@ namespace Mafmax.BuildService.BusinessLayer.Tests.Services.Facade;
 
 public class FacadeCalculationServiceTests
 {
-    private const int DESK_HEIGHT = DeskParameters.DeskHeight;
+    private const int DESK_HEIGHT = DeskParameters.DeskLength;
     private const int DESK_WIDTH = DeskParameters.DeskWidth;
     private const int ZERO = 0;
 

@@ -1,26 +1,25 @@
 ﻿using Mafmax.BuildService.BusinessLayer.Models;
+using static Mafmax.BuildService.BusinessLayer.Utils.CollectionTraversalHelper;
+using static Mafmax.BuildService.BusinessLayer.Utils.DeskParameters;
 
 namespace Mafmax.BuildService.BusinessLayer.Services.Facade;
 
 public class FacadeCalculationService : IFacadeCalculationService
 {
-    private const int DESK_HEIGHT = 13500;
-    private const int DESK_WIDTH = 500;
-
     /// <inheritdoc />
     public FacadeCoverageCalculationResult CalculateFacadeCoverage(FacadeProfile facadeProfile)
     {
         var corners = facadeProfile.Corners.AsSpan();
         var (leftmostXIndex, rightmostXIndex) = GetMarginalCoordXIndices(ref corners);
         var (leftmostX, rightmostX) = (corners[leftmostXIndex].X, corners[rightmostXIndex].X);
-        var panelsCount = (int)Math.Ceiling(Math.Abs(leftmostX - rightmostX) * 1.0 / DESK_WIDTH);
+        var panelsCount = (int)Math.Ceiling(Math.Abs(leftmostX - rightmostX) * 1.0 / DeskWidth);
         var (lastTopIndex, lastBottomIndex) = (leftmostXIndex, leftmostXIndex);
         var desks = new Desk[panelsCount];
 
         for (var panelIndex = 0; panelIndex < panelsCount; panelIndex++)
         {
-            var leftSideX = panelIndex * DESK_WIDTH + leftmostX;
-            var rightSideX = Math.Min(leftSideX + DESK_WIDTH, rightmostX);
+            var leftSideX = panelIndex * DeskWidth + leftmostX;
+            var rightSideX = Math.Min(leftSideX + DeskWidth, rightmostX);
             var deskLength = GetDeskLength(ref corners, ref lastBottomIndex, ref lastTopIndex, leftSideX, rightSideX);
             desks[panelIndex] = new Desk(deskLength);
         }
@@ -34,6 +33,9 @@ public class FacadeCalculationService : IFacadeCalculationService
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// Получает длину панели.
+    /// </summary>
     private static int GetDeskLength(ref Span<Point> corners, ref int lastBottomIndex, ref int lastTopIndex, int leftSideX, int rightSideX)
     {
         var low = GetDeskEndY(ref corners, ref lastBottomIndex, leftSideX, rightSideX, top: false);
@@ -43,6 +45,9 @@ public class FacadeCalculationService : IFacadeCalculationService
         return deskLength;
     }
 
+    /// <summary>
+    /// Получает конечную точку по оси Y, в которой будет находиться панель.
+    /// </summary>
     private static int GetDeskEndY(ref Span<Point> corners, ref int lastCoveredCornerIndex, int leftSide, int rightSide, bool top)
     {
         var startIndex = lastCoveredCornerIndex;
@@ -50,8 +55,8 @@ public class FacadeCalculationService : IFacadeCalculationService
         var rightIntersectionPoint = GetIntersectionPoint(ref corners, ref lastCoveredCornerIndex, rightSide, top);
 
         var midPointEnd = leftIntersectionPoint.Y;
-        
-        for (var i = IncrementIndex(corners.Length, startIndex, top) ; i != lastCoveredCornerIndex; i = IncrementIndex(corners.Length, i, top))
+
+        for (var i = IncrementIndex(corners.Length, startIndex, top); i != lastCoveredCornerIndex; i = IncrementIndex(corners.Length, i, top))
         {
             var midCorner = corners[i];
             if (midCorner.X > rightSide)
@@ -68,6 +73,9 @@ public class FacadeCalculationService : IFacadeCalculationService
         return low;
     }
 
+    /// <summary>
+    /// Получает точку пересечения с границей фасада.
+    /// </summary>
     private static Point GetIntersectionPoint(ref Span<Point> corners, ref int lastCoveredCornerIndex, int x, bool top)
     {
         var nextIndex = lastCoveredCornerIndex;
@@ -95,6 +103,9 @@ public class FacadeCalculationService : IFacadeCalculationService
         }
     }
 
+    /// <summary>
+    /// Получает индексы крайних вершин по оси X;
+    /// </summary>
     private static (int LeftmostIndex, int RightmostIndex) GetMarginalCoordXIndices(ref Span<Point> corners)
     {
         var leftmostIndex = 0;
@@ -117,7 +128,4 @@ public class FacadeCalculationService : IFacadeCalculationService
 
         return (leftmostIndex, rightmostIndex);
     }
-
-    private static int IncrementIndex(int length, int index, bool clockwise) =>
-        ((clockwise ? index + 1 : index - 1) + length) % length;
 }
