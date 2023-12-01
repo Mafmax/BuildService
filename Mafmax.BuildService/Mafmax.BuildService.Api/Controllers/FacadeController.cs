@@ -8,7 +8,7 @@ namespace Mafmax.BuildService.Api.Controllers;
 public class FacadeController(IFacadeCalculationService facadeCalculationService) : ControllerBase
 {
     /// <summary>
-    /// Вычисляет количество и длины фасадных панелей дл€ полного покрытия фасада здания.
+    /// ¬ычисл€ет количество и длины фасадных панелей дл€ полного покрыти€ фасада здани€.
     /// </summary>
     /// <param name="facadeProfile">ќписание фасада здания.</param>
     [HttpPost("calculateCoverage")]
@@ -16,9 +16,9 @@ public class FacadeController(IFacadeCalculationService facadeCalculationService
         ValueTask.FromResult(facadeCalculationService.CalculateFacadeCoverage(facadeProfile));
 
     /// <summary>
-    /// Раскраивает панели, минимизиру€ количество обрезков.
+    /// –аскраивает панели, минимизиру€ количество обрезков.
     /// </summary>
-    /// <param name="request">Запрос, содержащий описание досок, которые нужно получить в результате раскройки.</param>
+    /// <param name="request">«апрос, содержащий описание досок, которые нужно получить в результате раскройки.</param>
     [HttpPost("cutDesks")]
     public ValueTask<CutDesksResult> CutDesks([FromBody] CutDesksRequest request) => 
         ValueTask.FromResult(facadeCalculationService.CutDesks(request.Desks));
