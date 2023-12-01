@@ -13,4 +13,4 @@ public static class ServiceCollectionExtensions
     /// </summary>
     public static IServiceCollection AddBusinessLayer(this IServiceCollection services) => 
         services.AddScoped<IFacadeCalculationService, FacadeCalculationService>();
-}
+} 

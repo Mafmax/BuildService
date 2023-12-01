@@ -17,5 +17,5 @@ public interface IFacadeCalculationService
     /// Получает информацию о разрезах панелей минимизируя количество отходов.
     /// </summary>
     /// <param name="desks">Панели, которые нужно получить в итоге.</param>
-    CutDesksResult CutDesks(Desk[] desks);
+    CutDesksResult CutDesks(Desk[] desks); 
 }
