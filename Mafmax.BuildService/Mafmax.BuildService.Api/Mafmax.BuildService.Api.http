@@ -1,0 +1,6 @@
+@Mafmax.BuildService.Api_HostAddress = http://localhost:5231
+
+GET {{Mafmax.BuildService.Api_HostAddress}}/facade/
+Accept: application/json
+
+###
