@@ -3,4 +3,4 @@
 /// <summary>
 /// Метка для получения метаданных сборки.
 /// </summary>
-public record AssemblyMarker; 
+public record AssemblyMarker;

@@ -14,4 +14,4 @@ public struct Point
     /// Координата по оси ординат.
     /// </summary>
     public int Y { get; set; } 
-} 
+}

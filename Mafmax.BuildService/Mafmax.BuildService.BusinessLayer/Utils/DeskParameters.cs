@@ -14,4 +14,4 @@ public class DeskParameters
     /// Ширина панели.
     /// </summary>
     public const int DeskWidth = 500;
- 
+}

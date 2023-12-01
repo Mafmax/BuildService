@@ -11,4 +11,4 @@ public class CollectionTraversalHelper
     /// <returns></returns>
     public static int IncrementIndex(int length, int index, bool clockwise) =>
         ((clockwise ? index + 1 : index - 1) + length) % length;
-} 
+}

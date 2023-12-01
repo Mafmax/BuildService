@@ -24,7 +24,7 @@ public class FacadeCalculationServiceTests
         var desks = sut.CalculateFacadeCoverage(facade).Desks;
         var desksCount = desks.Length;
         var firstDeskLength = desks.FirstOrDefault()?.Length;
-         
+
         // Assert
         desksCount.Should().Be(2);
         firstDeskLength.Should().Be(DESK_HEIGHT, 

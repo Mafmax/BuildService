@@ -10,7 +10,7 @@ public class FacadeController(IFacadeCalculationService facadeCalculationService
     /// <summary>
     /// ¬ычисл€ет количество и длины фасадных панелей дл€ полного покрыти€ фасада здани€.
     /// </summary>
-    /// <param name="facadeProfile">ќ писание фасада здани€.</param>
+    /// <param name="facadeProfile">ќписание фасада здани€.</param>
     [HttpPost("calculateCoverage")]
     public ValueTask<FacadeCoverageCalculationResult> CalculateFacadeCoverage([FromBody] FacadeProfile facadeProfile) =>
         ValueTask.FromResult(facadeCalculationService.CalculateFacadeCoverage(facadeProfile));
