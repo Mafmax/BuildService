@@ -1,8 +1,11 @@
-﻿namespace Mafmax.BuildService.BusinessLayer.Models;
+﻿using System.Diagnostics;
+
+namespace Mafmax.BuildService.BusinessLayer.Models;
 
 /// <summary>
 /// Точка в двумерном пространстве.
 /// </summary>
+[DebuggerDisplay("{X}, {Y}")]
 public struct Point
 {
     /// <summary>

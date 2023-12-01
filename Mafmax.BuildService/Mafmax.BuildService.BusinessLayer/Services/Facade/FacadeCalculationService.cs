@@ -23,7 +23,7 @@ public class FacadeCalculationService : IFacadeCalculationService
             var deskLength = GetDeskLength(ref corners, ref lastBottomIndex, ref lastTopIndex, leftSideX, rightSideX);
             desks[panelIndex] = new Desk(deskLength);
         }
-        
+
         return new FacadeCoverageCalculationResult(desks);
     }
 
@@ -56,13 +56,11 @@ public class FacadeCalculationService : IFacadeCalculationService
 
         var midPointEnd = leftIntersectionPoint.Y;
 
-        for (var i = IncrementIndex(corners.Length, startIndex, top); i != lastCoveredCornerIndex; i = IncrementIndex(corners.Length, i, top))
+        for (var i = IncrementIndex(corners.Length, startIndex, top); i != IncrementIndex(corners.Length, lastCoveredCornerIndex, top); i = IncrementIndex(corners.Length, i, top))
         {
             var midCorner = corners[i];
-            if (midCorner.X > rightSide)
-            {
-                break;
-            }
+            if (midCorner.X < leftSide) continue;
+            if (midCorner.X > rightSide) break;
 
             midPointEnd = top ? Math.Max(midPointEnd, midCorner.Y) : Math.Min(midPointEnd, midCorner.Y);
         }
@@ -97,7 +95,8 @@ public class FacadeCalculationService : IFacadeCalculationService
             }
 
             var lastCorner = corners[lastCoveredCornerIndex];
-            var y = (nextCorner.Y - lastCorner.Y) * (x - lastCorner.X) / (nextCorner.X - lastCorner.X) + lastCorner.Y;
+            var yRaw = (lastCorner.Y * (x - nextCorner.X) - nextCorner.Y * (x - lastCorner.X)) * 1.0 / (lastCorner.X - nextCorner.X);
+            var y = (int)(top ? Math.Ceiling(yRaw) : Math.Floor(yRaw));
 
             return new Point { X = x, Y = y };
         }
